@@ -1,0 +1,72 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-success">
+                <h4 class="card-title">Class Folders</h4>
+                <p class="card-category">Academic Year 2019-2020</p>
+            </div>
+            <div class="row">
+                <div class="col-md-3" *ngFor="let class of classes.data">
+                    <div class="card card-profile  card-plain box-shadow">
+                    <div class="card-body">
+                        <h4><i class="text-primary fa fa-folder"></i> | {{ class.cl_code }}</h4>
+                        <h6 class="card-category">{{ class.cl_sucode }} - Subject Title</h6>
+                        <button (click)="getFiles(class.cl_code)" class="btn btn-sm btn-info btn-round"  data-toggle="modal" data-target="#exampleModal">Show Files</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Files for class: <strong class="text-success">{{ filemodaltitle }}</strong></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Upload New File
+                <form (submit)="uploadFiles($event)">
+                    <div class="row">
+                        <input type="hidden" [value]="filemodaltitle">
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-sm btn-success btn-block">Upload</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class=" text-primary">
+                            <th>No.</th>
+                            <th>File Name</th>
+                            <th>Date Uploaded</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let file of files.data; let i = index">
+                                <td>{{ i+1 }}</td>
+                                <td><a href="{{file.fi_path}}" target="_blank" download>{{ file.fi_name }}</a></td>
+                                <td>{{ file.fi_date }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger btn-round"><i class="fa fa-trash"></i> - Delete File</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
